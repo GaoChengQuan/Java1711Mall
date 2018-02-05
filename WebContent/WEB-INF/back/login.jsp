@@ -31,7 +31,7 @@
     <div class="signinpanel">
         <div class="row">
             <div class="col-sm-12">
-                <form method="post">
+                <form id="login-form" method="post">
                     <h4 class="no-margins">登录：</h4>
                     <p class="m-t-md">登录到H+后台主题UI框架</p>
                     <input type="text" id="username" name="username" class="form-control uname" placeholder="用户名" />
@@ -75,6 +75,21 @@
     			mylayer.errorMsg("密码不能为空");
     			return;
     		}
+    		
+    		//3、ajax提交用户名和密码，并且接受后台返回的json数据
+    		$.ajax({
+    			url : "${ctx}/manager/user/login.action",
+    			type : "POST",
+    			dataType : "json",
+    			data : $("#login-form").serialize(),
+    			success : function(data) {
+    				if(data.status == 0) {
+    					mylayer.successUrl(data.msg, "${ctx}/manager/index.action");
+    				} else {
+    					mylayer.errorMsgs(data.msg);
+    				}
+    			}
+    		});
     	}
     	
     	/*是否合法：4-8数字或字母*/
