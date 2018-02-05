@@ -58,6 +58,10 @@ public class ServerResponse<T> implements Serializable {
 		return new ServerResponse<>(ResponseCode.ERROR.getCode(), msg, data);
 	}
 
+	public boolean isSuccess() {
+		return status == ResponseCode.SUCCESS.getCode();
+	}
+	
 	public Integer getStatus() {
 		return status;
 	}
@@ -82,4 +86,7 @@ public class ServerResponse<T> implements Serializable {
 		this.data = data;
 	}
 
+	public static void main(String[] args) {
+		System.out.println(ResponseCode.ERROR.getCode());
+	}
 }

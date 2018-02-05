@@ -1,4 +1,7 @@
 var util = {
+	SUCCESS : 0,
+	ERROR : 1,
+	NEED_LOGIN : 2,
 	isNull : function(value) {
 		//把value首尾的空格去掉
 		var str = value.replace(/(^\s*)|(\s*$)/, '');

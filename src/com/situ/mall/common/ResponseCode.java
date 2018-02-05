@@ -13,7 +13,8 @@ public enum ResponseCode {
 	private String desc;
 
 	private ResponseCode(int code, String desc) {
-
+		this.code = code;
+		this.desc = desc;
 	}
 
 	public int getCode() {

@@ -1,5 +1,6 @@
 package com.situ.mall.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class UserServiceImpl implements IUserService{
 			return ServerResponse.createError("密码错误");
 		}
 		
+		//user.setPassword(StringUtils.EMPTY);
+		user.setPassword("");
 		return ServerResponse.createSuccess("登录成功", user);
 	}
 	

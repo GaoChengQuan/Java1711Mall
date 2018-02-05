@@ -83,10 +83,10 @@
     			dataType : "json",
     			data : $("#login-form").serialize(),
     			success : function(data) {
-    				if(data.status == 0) {
+    				if(data.status == util.SUCCESS) {
     					mylayer.successUrl(data.msg, "${ctx}/manager/index.action");
     				} else {
-    					mylayer.errorMsgs(data.msg);
+    					mylayer.errorMsg(data.msg);
     				}
     			}
     		});
