@@ -1,9 +1,12 @@
 package com.situ.mall.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.situ.mall.common.ServerResponse;
 import com.situ.mall.entity.User;
 import com.situ.mall.mapper.UserMapper;
@@ -31,9 +34,14 @@ public class UserServiceImpl implements IUserService{
 		user.setPassword("");
 		return ServerResponse.createSuccess("登录成功", user);
 	}
-	
-	
-	
-	
 
+	@Override
+	public ServerResponse<List<User>> pageList(Integer page, Integer limit) {
+		PageHelper.startPage(page, limit);
+		//数据data
+		List<User> list = userMapper.pageList();
+		//count
+		Integer count = (int) ((Page) list).getTotal();
+		return ServerResponse.createSuccess("查询成功", count, list);
+	}
 }

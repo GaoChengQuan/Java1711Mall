@@ -50,7 +50,7 @@
                         <span class="ng-scope">分类</span>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="index_v1.html">
+                        <a class="J_menuItem" href="${ctx}/manager/user/getUserPage.action">
                             <i class="fa fa-home"></i>
                             <span class="nav-label">主页</span>
                         </a>

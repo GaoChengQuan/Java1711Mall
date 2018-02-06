@@ -9,9 +9,11 @@
      var ctx="${pageContext.request.contextPath}";  
 </script>
 
+<link href="${ctx}/static/lib/layui/css/layui.css" rel="stylesheet">
 
 <script type="text/javascript" src="${ctx}/static/lib/jquery/jquery-1.11.1.js"></script>
-<script type="text/javascript" src="${ctx}/static/lib/layer/layer.js"></script>
+<script type="text/javascript" src="${ctx}/static/lib/layui/layui.js"></script>
+<%-- <script type="text/javascript" src="${ctx}/static/lib/layer/layer.js"></script> --%>
 <script type="text/javascript" src="${ctx}/static/common/js/util.js"></script>
 <script type="text/javascript" src="${ctx}/static/common/js/mylayer.js"></script>
 

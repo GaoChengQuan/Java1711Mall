@@ -48,6 +48,13 @@
         </div>
     </div>
     <script type="text/javascript">
+    	layui.use(['layer', 'form'], function(){
+		  var layer = layui.layer;
+		  var form = layui.form;
+		  
+		  layer.msg('Hello World');
+		});
+    
     	function submitForm() {
     		/*
     		1、验证用户名
@@ -83,7 +90,7 @@
     			dataType : "json",
     			data : $("#login-form").serialize(),
     			success : function(data) {
-    				if(data.status == util.SUCCESS) {
+    				if(data.code == util.SUCCESS) {
     					mylayer.successUrl(data.msg, "${ctx}/manager/index.action");
     				} else {
     					mylayer.errorMsg(data.msg);

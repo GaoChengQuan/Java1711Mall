@@ -1,5 +1,7 @@
 package com.situ.mall.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.situ.mall.entity.User;
@@ -20,4 +22,6 @@ public interface UserMapper {
 	int checkUsername(String username);
 
 	User selectLogin(@Param("username")String username, @Param("password")String password);
+
+	List<User> pageList();
 }
