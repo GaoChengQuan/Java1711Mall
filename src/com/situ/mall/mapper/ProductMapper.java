@@ -17,5 +17,5 @@ public interface ProductMapper {
 
     int updateByPrimaryKey(Product record);
 
-	List<Product> pageList();
+	List<Product> pageList(Product product);
 }

@@ -19,8 +19,8 @@ public class ProductManagerController {
 	
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public ServerResponse<List<Product>> pageList(Integer page, Integer limit) {
-		return productService.pageList(page, limit);
+	public ServerResponse<List<Product>> pageList(Integer page, Integer limit, Product product) {
+		return productService.pageList(page, limit, product);
 	}
 	
 	@RequestMapping("/getProductPage")

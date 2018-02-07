@@ -19,11 +19,11 @@ public class ProductServiceImpl implements IProductService{
 	private ProductMapper productMapper;
 		
 	@Override
-	public ServerResponse<List<Product>> pageList(Integer page, Integer limit) {
+	public ServerResponse<List<Product>> pageList(Integer page, Integer limit, Product product) {
 		//1、设置分页
 		PageHelper.startPage(page, limit);
 		//2、执行查询 （分页之后的数据）
-		List<Product> list = productMapper.pageList();
+		List<Product> list = productMapper.pageList(product);
 		//3、count
 		//第一种：分页时，实际返回的结果list类型是Page<E>，如果想取出分页信息，需要强制转换为Page<E>
 		//Integer count = (int) ((Page) list).getTotal();

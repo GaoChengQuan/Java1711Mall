@@ -177,9 +177,17 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="pageList" resultMap="BaseResultMap">
+  <select id="pageList" parameterType="product" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from product
+    <where>
+    	<if test="name!=null">
+    		and name like concat('%', #{name}, '%')
+    	</if>
+    	<if test="subtitle!=null">
+    		and subtitle like concat('%', #{subtitle}, '%')
+    	</if>
+    </where>
   </select>
 </mapper>

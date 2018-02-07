@@ -9,6 +9,17 @@
     <title> - 商品列表</title>
 </head>
 <body>
+	<div class="demoTable">
+	  名称：
+	  <div class="layui-inline">
+	    <input class="layui-input" name="id" id="searchName" autocomplete="off">
+	  </div>
+	  子标题：
+	  <div class="layui-inline">
+	    <input class="layui-input" name="id" id="searchSubtitle" autocomplete="off">
+	  </div>
+	  <button class="layui-btn" data-type="reload">搜索</button>
+	</div>
 	<table class="layui-hide" id="datagrid"></table>
 	
 	<script>
@@ -29,7 +40,29 @@
 		      {field:'createTime', title: '创建时间', sort: true},
 		      {field:'updateTime', title: '更新时间', sort: true},
 		    ]],
-		    page: true
+		    page: true,
+		    id : "listReload" //参数 ID 即为基础参数id对应的值
+		  });
+		  
+		  active = {
+		    reload: function(){
+		      var demoReload = $('#searchName');
+		      //执行重载
+		      table.reload('listReload', {
+	    	  	where: { //设定异步数据接口的额外参数，任意设
+	    		    name : $('#searchName').val(),
+	    		    subtitle : $('#searchSubtitle').val(),
+	    		},
+	    		page: {
+	    		   curr: 1 //重新从第 1 页开始
+	    		}
+		      });
+		    }
+		  };
+				  
+		  $('.demoTable .layui-btn').on('click', function(){
+		    var type = $(this).data('type');
+		    active[type] ? active[type].call(this) : '';
 		  });
 		});
 	</script>
