@@ -1,7 +1,5 @@
 package com.situ.mall.controller.back;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +26,20 @@ public class UserManagerController {
 	
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public ServerResponse<List<User>> pageList(Integer page, Integer limit) {
-		return userService.pageList(page, limit);
+	public ServerResponse pageList(Integer page, Integer limit, User user) {
+		return userService.pageList(page, limit, user);
+	}
+	
+	@RequestMapping("/deleteById")
+	@ResponseBody
+	public ServerResponse deleteById(Integer id) {
+		return userService.deleteById(id);
+	}
+	
+	@RequestMapping("/deleteAll")
+	@ResponseBody
+	public ServerResponse deleteAll(String ids) {
+		return userService.deleteAll(ids);
 	}
 	
 	@RequestMapping("/getUserPage")

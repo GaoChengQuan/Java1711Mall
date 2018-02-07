@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.situ.mall.common.ServerResponse;
 import com.situ.mall.entity.User;
+import com.situ.mall.entity.User;
 import com.situ.mall.mapper.UserMapper;
 import com.situ.mall.service.IUserService;
 import com.situ.mall.util.MD5Util;
@@ -37,11 +38,11 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public ServerResponse<List<User>> pageList(Integer page, Integer limit) {
+	public ServerResponse<List<User>> pageList(Integer page, Integer limit, User user) {
 		//1、设置分页
 		PageHelper.startPage(page, limit);
 		//2、执行查询 （分页之后的数据）
-		List<User> list = userMapper.pageList();
+		List<User> list = userMapper.pageList(user);
 		//3、count
 		//第一种：分页时，实际返回的结果list类型是Page<E>，如果想取出分页信息，需要强制转换为Page<E>
 		//Integer count = (int) ((Page) list).getTotal();
@@ -49,5 +50,27 @@ public class UserServiceImpl implements IUserService{
 		PageInfo pageInfo = new PageInfo(list);
 		Integer count = (int) pageInfo.getTotal();
 		return ServerResponse.createSuccess("查询成功", count, list);
+	}
+
+	@Override
+	public ServerResponse deleteById(Integer id) {
+		int count = userMapper.deleteByPrimaryKey(id);
+		if (count > 0) {
+			return ServerResponse.createSuccess("删除成功");
+		} 
+		
+		return ServerResponse.createError("删除失败");
+	}
+
+	@Override
+	public ServerResponse deleteAll(String ids) {
+		String[] idsArray = ids.split(",");
+		// delete from user where id in();
+		int count = userMapper.deleteAll(idsArray);
+		if (count == idsArray.length) {
+			return ServerResponse.createSuccess("批量删除成功");
+		}
+		
+		return ServerResponse.createError("批量删除失败");
 	}
 }

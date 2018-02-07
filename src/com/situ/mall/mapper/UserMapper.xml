@@ -166,9 +166,25 @@
     and password=#{password}
   </select>
   
-  <select id="pageList" resultMap="BaseResultMap">
+   <select id="pageList" parameterType="user" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from user
+    <where>
+    	<if test="username!=null">
+    		and username like concat('%', #{username}, '%')
+    	</if>
+    	<if test="email!=null">
+    		and email like concat('%', #{email}, '%')
+    	</if>
+    </where>
   </select>
+  
+  <delete id="deleteAll">
+  	delete from user
+  	where id in
+  	<foreach collection="array" item="id" open="(" close=")" separator=",">
+  		#{id}
+  	</foreach>
+  </delete>
 </mapper>
