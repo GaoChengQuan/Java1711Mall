@@ -18,13 +18,14 @@
 	  <div class="layui-inline">
 	    <input class="layui-input" name="id" id="searchSubtitle" autocomplete="off">
 	  </div>
-	  <button class="layui-btn" data-type="reload">搜索</button>
+	  <button class="layui-btn" data-type="search">搜索</button>
+	  <button class="layui-btn layui-btn-danger" data-type="deleteAll">批量删除</button>
 	</div>
 	<table class="layui-hide" id="datagrid" lay-filter="datagrid"></table>
 	
 	<script type="text/html" id="toolbar">
-  		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-  		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  		<a class="layui-btn  layui-btn-xs" lay-event="edit">编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
 	
@@ -50,10 +51,11 @@
 		    page: true,
 		    id : "listReload" //设定容器唯一ID，id值是对表格的数据操作方法上是必要的传递条件，它是表格容器的索引
 		  });
-		  
+		 
+		  //var $ = layui.$;
 		  active = {
 		    //这里的表格重载是指对表格重新进行渲染，包括数据请求和基础参数的读取
-		    reload: function(){
+		    search: function(){
 		      //执行重载
 		      table.reload('listReload', {//参数 ID 即为基础参数id对应的值,容器唯一ID 
 	    	  	where: { //设定异步数据接口的额外参数，任意设
@@ -64,6 +66,29 @@
 	    		   curr: 1 //重新从第 1 页开始
 	    		}
 		      });
+		    },
+		    deleteAll : function() {
+		    	var checkStatus = table.checkStatus('listReload');
+		    	var data = checkStatus.data;
+		    	console.log(checkStatus.data) //获取选中行的数据
+		    	console.log(checkStatus.data.length) //获取选中行数量，可作为是否有选中行的条件
+		    	console.log(checkStatus.isAll) //表格是否全选
+		    	layer.confirm('确定要删除这' + data.length + '条数据吗？', function(index){
+			    	var ids = util.getSelectedIds(data);
+			    	$.ajax({
+			    		url : '${ctx}/manager/product/deleteAll.action',
+			    		data : {'ids' : ids},
+			    		dataType : 'json',
+			    		success : function(jsonData) {
+			    			if(jsonData.code == util.SUCCESS) {
+		       					mylayer.success(jsonData.msg);
+		       					active.search();
+		       				} else {
+		       					mylayer.errorMsg(jsonData.msg);
+		       				}
+			    		}
+		    	});
+	    	});
 		    }
 		  };
 		  
@@ -83,10 +108,10 @@
 		       			dataType : 'json',
 		       			success : function(jsonData) {
 		       				if(jsonData.code == util.SUCCESS) {
-		       					mylayer.success("删除成功");
+		       					mylayer.success(jsonData.msg);
 		       					active.reload();
 		       				} else {
-		       					mylayer.errorMsg("删除失败");
+		       					mylayer.errorMsg(jsonData.msg);
 		       				}
 		       				layer.close(index);
 		       			}

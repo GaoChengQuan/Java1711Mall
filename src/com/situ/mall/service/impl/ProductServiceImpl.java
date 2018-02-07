@@ -1,5 +1,6 @@
 package com.situ.mall.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.situ.mall.entity.Product;
 import com.situ.mall.mapper.ProductMapper;
 import com.situ.mall.service.IProductService;
 import com.situ.mall.util.MD5Util;
+import com.sun.org.apache.regexp.internal.recompile;
 @Service
 public class ProductServiceImpl implements IProductService{
 	@Autowired
@@ -41,5 +43,17 @@ public class ProductServiceImpl implements IProductService{
 		} 
 		
 		return ServerResponse.createError("删除失败");
+	}
+
+	@Override
+	public ServerResponse deleteAll(String ids) {
+		String[] idsArray = ids.split(",");
+		// delete from product where id in();
+		int count = productMapper.deleteAll(idsArray);
+		if (count == idsArray.length) {
+			return ServerResponse.createSuccess("批量删除成功");
+		}
+		
+		return ServerResponse.createError("批量删除失败");
 	}
 }

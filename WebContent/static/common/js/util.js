@@ -11,5 +11,13 @@ var util = {
 		} else {
 			return false;
 		}
+	},
+	getSelectedIds : function(data) {
+		var ids = [];//[1,2,3]
+    	for(var i in data) {
+    		ids.push(data[i].id);
+    	}
+    	ids = ids.join(',');// '1,2,3'
+    	return ids;
 	}
 }

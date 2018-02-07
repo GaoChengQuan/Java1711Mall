@@ -1,7 +1,5 @@
 package com.situ.mall.controller.back;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +25,12 @@ public class ProductManagerController {
 	@ResponseBody
 	public ServerResponse deleteById(Integer id) {
 		return productService.deleteById(id);
+	}
+	
+	@RequestMapping("/deleteAll")
+	@ResponseBody
+	public ServerResponse deleteAll(String ids) {
+		return productService.deleteAll(ids);
 	}
 	
 	@RequestMapping("/getProductPage")
