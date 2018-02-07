@@ -41,14 +41,14 @@
 		      {field:'updateTime', title: '更新时间', sort: true},
 		    ]],
 		    page: true,
-		    id : "listReload" //参数 ID 即为基础参数id对应的值
+		    id : "listReload" //设定容器唯一ID，id值是对表格的数据操作方法上是必要的传递条件，它是表格容器的索引
 		  });
 		  
 		  active = {
+		    //这里的表格重载是指对表格重新进行渲染，包括数据请求和基础参数的读取
 		    reload: function(){
-		      var demoReload = $('#searchName');
 		      //执行重载
-		      table.reload('listReload', {
+		      table.reload('listReload', {//参数 ID 即为基础参数id对应的值,容器唯一ID 
 	    	  	where: { //设定异步数据接口的额外参数，任意设
 	    		    name : $('#searchName').val(),
 	    		    subtitle : $('#searchSubtitle').val(),
@@ -59,7 +59,8 @@
 		      });
 		    }
 		  };
-				  
+		  
+		  //触发搜索按钮点击事件
 		  $('.demoTable .layui-btn').on('click', function(){
 		    var type = $(this).data('type');
 		    active[type] ? active[type].call(this) : '';
