@@ -9,4 +9,6 @@ public interface IProductService {
 
 	ServerResponse<List<Product>> pageList(Integer page, Integer limit, Product product);
 
+	ServerResponse deleteById(Integer id);
+
 }

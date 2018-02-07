@@ -19,8 +19,14 @@ public class ProductManagerController {
 	
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public ServerResponse<List<Product>> pageList(Integer page, Integer limit, Product product) {
+	public ServerResponse pageList(Integer page, Integer limit, Product product) {
 		return productService.pageList(page, limit, product);
+	}
+	
+	@RequestMapping("/deleteById")
+	@ResponseBody
+	public ServerResponse deleteById(Integer id) {
+		return productService.deleteById(id);
 	}
 	
 	@RequestMapping("/getProductPage")
