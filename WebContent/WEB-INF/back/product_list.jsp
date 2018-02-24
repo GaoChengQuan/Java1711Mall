@@ -20,6 +20,7 @@
 	  </div>
 	  <button class="layui-btn" data-type="search">搜索</button>
 	  <button class="layui-btn layui-btn-danger" data-type="deleteAll">批量删除</button>
+	  <button class="layui-btn" data-type="add">添加商品</button>
 	</div>
 	<table class="layui-hide" id="datagrid" lay-filter="datagrid"></table>
 	
@@ -87,8 +88,11 @@
 		       					mylayer.errorMsg(jsonData.msg);
 		       				}
 			    		}
-		    	});
-	    	});
+		    		});
+	    		});
+		    },
+		    add : function() {
+		    	location.href = "${ctx}/manager/product/getAddPage.action";
 		    }
 		  };
 		  

@@ -37,4 +37,9 @@ public class ProductManagerController {
 	public String getProductPage() {
 		return "product_list";
 	}
+	
+	@RequestMapping("/getAddPage")
+	public String getAddPage() {
+		return "product_add";
+	}
 }
