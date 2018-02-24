@@ -3,6 +3,7 @@ package com.situ.mall.service.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.omg.PortableServer.POA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +56,14 @@ public class ProductServiceImpl implements IProductService{
 		}
 		
 		return ServerResponse.createError("批量删除失败");
+	}
+
+	@Override
+	public ServerResponse add(Product product) {
+		int rowCount = productMapper.insert(product);
+		if (rowCount > 0) {
+			return ServerResponse.createSuccess("添加商品成功");
+		}
+		return ServerResponse.createError("添加商品失败");
 	}
 }

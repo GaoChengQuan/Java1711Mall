@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div class="main_div">
-		<form class="layui-form layui-form-pane" action="">
+		<form id="form_add" class="layui-form layui-form-pane" action="" method="post" enctype="multipart/form-data">
 			<div class="layui-form-item">
 				<label class="layui-form-label">商品名称</label>
 				<div class="layui-input-block">
@@ -39,7 +39,7 @@
 					</select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="quiz2" id="secondCategory">
+					<select name="categoryId" id="secondCategory">
 						<option value="">请选二级分类</option>
 					</select>
 				</div>
@@ -65,6 +65,14 @@
 					<input type="radio" name="status" value="2" title="下架">
 				</div>
 			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">商品主图</label>
+				<div class="layui-input-block">
+					<input type="hidden" id="mainImage" name="mainImage" />
+					<img alt="" src="" id="imgId" width="100" height="100"/><br/>
+					<input type="file" name="pictureFile" onchange="uploadPic()"/>
+				</div>
+			</div>
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">文本域</label>
 				<div class="layui-input-block">
@@ -72,10 +80,11 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
+				<button type="button" class="layui-btn" onclick="submitForm()">添加</button>
 			</div>
 		</form>
 	</div>
+	<script type="text/javascript" src="${ctx}/static/lib/jquery/jquery.form.js"></script>
 	<script>
 		layui.use([ 'form' ], function() {
 			var form = layui.form;
@@ -130,6 +139,36 @@
 				}
 			});
 		});
+		
+		//图片上传
+		function uploadPic() {
+			$('#form_add').ajaxSubmit({
+				url : '${ctx}/manager/upload/uploadPic.action',
+				type : 'POST',
+				dataType : 'json',
+				success : function(jsonObj) {
+					console.log(jsonObj);
+					$('#imgId').attr('src', jsonObj.url);
+					$('#mainImage').val(jsonObj.fileName);
+				}
+			});
+		}
+		
+		function submitForm(){
+			$.ajax({
+				url : '${ctx}/manager/product/add.action',
+				data : $('#form_add').serialize(),
+				type : 'POST',
+				dataType : 'json',
+				success : function(jsonObj) {
+					if(jsonObj.code == util.SUCCESS) {
+						mylayer.success(jsonObj.msg);
+					} else {
+						mylayer.errorMsg(jsonObj.msg);
+					}
+				}
+			});
+		}
 	</script>
 </body>
 </html>

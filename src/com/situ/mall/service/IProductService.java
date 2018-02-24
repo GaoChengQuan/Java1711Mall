@@ -13,4 +13,6 @@ public interface IProductService {
 
 	ServerResponse deleteAll(String ids);
 
+	ServerResponse add(Product product);
+
 }

@@ -42,4 +42,10 @@ public class ProductManagerController {
 	public String getAddPage() {
 		return "product_add";
 	}
+	
+	@RequestMapping("/add")
+	@ResponseBody
+	public ServerResponse add(Product product) {
+		return productService.add(product);
+	}
 }
