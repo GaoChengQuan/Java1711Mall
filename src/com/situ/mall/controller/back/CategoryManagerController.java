@@ -21,4 +21,10 @@ public class CategoryManagerController {
 	public ServerResponse selectTopCategory() {
 		return categoryService.selectTopCategory();
 	}
+	
+	@RequestMapping("/selectSecondCategory")
+	@ResponseBody
+	public ServerResponse selectSecondCategory(Integer topCategoryId) {
+		return categoryService.selectSecondCategory(topCategoryId);
+	}
 }

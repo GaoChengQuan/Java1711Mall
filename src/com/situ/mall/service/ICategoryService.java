@@ -6,4 +6,6 @@ public interface ICategoryService {
 
 	ServerResponse selectTopCategory();
 
+	ServerResponse selectSecondCategory(Integer topCategoryId);
+
 }

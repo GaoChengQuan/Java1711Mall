@@ -26,5 +26,15 @@ public class CategoryServiceImpl implements ICategoryService{
 		
 		return ServerResponse.createSuccess("查找一级分类成功", list);
 	}
+
+	@Override
+	public ServerResponse selectSecondCategory(Integer topCategoryId) {
+		List<Category> list = categoryMapper.selectSecondCategory(topCategoryId);
+		if (list == null || list.size() == 0) {
+			return ServerResponse.createError("没有二级分类");
+		}
+		
+		return ServerResponse.createSuccess("查找二级分类成功", list);
+	}
 		
 }

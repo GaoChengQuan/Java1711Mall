@@ -7,11 +7,11 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<style type="text/css">
-		.main_div{
-			margin : 15px;
-		}
-	</style>
+<style type="text/css">
+.main_div {
+	margin: 15px;
+}
+</style>
 <title>- 商品添加</title>
 </head>
 <body>
@@ -34,21 +34,13 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">商品分类</label>
 				<div class="layui-input-inline">
-					<select name="quiz1">
+					<select name="quiz1" id="topCategory" lay-filter="topCategoryFilter">
 						<option value="">请选一级分类</option>
-						<option value="浙江" selected="">浙江省</option>
-						<option value="你的工号">江西省</option>
-						<option value="你最喜欢的老师">福建省</option>
 					</select>
 				</div>
 				<div class="layui-input-inline">
-					<select name="quiz2">
-						<option value="">请选择市</option>
-						<option value="杭州">杭州</option>
-						<option value="宁波" disabled="">宁波</option>
-						<option value="温州">温州</option>
-						<option value="温州">台州</option>
-						<option value="温州">绍兴</option>
+					<select name="quiz2" id="secondCategory">
+						<option value="">请选二级分类</option>
 					</select>
 				</div>
 			</div>
@@ -85,19 +77,56 @@
 		</form>
 	</div>
 	<script>
-		layui.use(['form'], function(){
-		  var form = layui.form;
+		layui.use([ 'form' ], function() {
+			var form = layui.form;
+
+			form.on('select(topCategoryFilter)', function(data) {
+				console.log(data.elem); //得到select原始DOM对象
+				console.log(data.value); //得到被选中的值
+				console.log(data.othis); //得到美化后的DOM对象
+				$.ajax({
+					url : '${ctx}/manager/category/selectSecondCategory.action',
+					data : 'topCategoryId=' + data.value,
+					dataType : 'json',
+					type : 'POST',
+					success : function(jsonObj) {
+						if (jsonObj.code == util.SUCCESS) {
+							var html = '<option value="">请选二级分类</option>';
+							var data = jsonObj.data;
+							for (var i = 0; i < data.length; i++) {
+								html += '<option value="'+data[i].id+'">'
+										+ data[i].name + '</option>';
+							}
+							$('#secondCategory').html(html);
+							form.render('select'); //刷新select选择框渲染,不然不显示
+						} else {
+							mylayer.errorMsg(jsonObj.msg);
+						}
+					}
+				});
+			});
 		});
-		
-		$(function(){
+
+		$(function() {
 			//加载一级分类
 			$.ajax({
 				url : '${ctx}/manager/category/selectTopCategory.action',
 				type : "POST",
 				dataType : "json",
-				success : function(jsonObj){
+				success : function(jsonObj) {
 					console.log(jsonObj);
-					
+					if (jsonObj.code == util.SUCCESS) {
+						var html = '<option value="">请选一级分类</option>';
+						var data = jsonObj.data;
+						for (var i = 0; i < data.length; i++) {
+							html += '<option value="'+data[i].id+'">'
+									+ data[i].name + '</option>';
+							;
+						}
+						$('#topCategory').html(html);
+					} else {
+
+					}
 				}
 			});
 		});
