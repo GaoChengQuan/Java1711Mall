@@ -76,9 +76,9 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">商品图片</label>
 				<div class="layui-input-block">
-					<!-- <input type="hidden" id="mainImage" name="mainImage" />
-					<img alt="" src="" id="imgId" width="100" height="100"/><br/>
-					<input type="file" id="inputFile" name="pictureFile" onchange="uploadPic()"/> -->
+					<a href="javascript:void(0)" id="multiPicUpload" class="multiPicUpload">上传图片</a>
+					<input type="hidden" id="subImages" name="subImages" />
+					<div id="subImagesDiv"></div>
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
@@ -190,15 +190,35 @@
 		var myKindEditor ;
         KindEditor.ready(function(K) {
             var kingEditorParams = {
-                 /* //指定上传文件参数名称
+                 //指定上传文件参数名称
                  filePostName  : "pictureFile",
                  //指定上传文件请求的url。
-                 uploadJson : '${ctx}/upload/multiPicUpload.action',
+                 uploadJson : '${ctx}/manager/upload/multiPicUpload.action',
                  //上传类型，分别为image、flash、media、file
-                 dir : "image", */
+                 dir : "image",
                  afterBlur: function () { this.sync(); }
            }
-           var editor = K.editor(kingEditorParams);
+            var editor = K.editor(kingEditorParams);
+            //多图片上传
+            K('#multiPicUpload').click(function() {
+                editor.loadPlugin('multiimage', function() {
+                    editor.plugin.multiImageDialog({
+                         clickFn : function(urlList) {
+                             console.log(urlList);
+                             var div = K('#subImagesDiv');
+                             var imgArray = [];
+                             div.html('');
+                             K.each(urlList, function(i, data) {
+                                 imgArray.push(data.fileName);
+                                 div.append('<img src="' + data.url + '" width="80" height="50">');
+                             });
+                             $("#subImages").val(imgArray.join(",")); 
+                             editor.hideDialog();
+                         }
+                    });
+                });
+            });
+
             
           //富文本编辑器
           myKindEditor = KindEditor.create('#form_add[name=detail]', kingEditorParams);
