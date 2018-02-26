@@ -70,7 +70,15 @@
 				<div class="layui-input-block">
 					<input type="hidden" id="mainImage" name="mainImage" />
 					<img alt="" src="" id="imgId" width="100" height="100"/><br/>
-					<input type="file" name="pictureFile" onchange="uploadPic()"/>
+					<input type="file" id="inputFile" name="pictureFile" onchange="uploadPic()"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">商品图片</label>
+				<div class="layui-input-block">
+					<!-- <input type="hidden" id="mainImage" name="mainImage" />
+					<img alt="" src="" id="imgId" width="100" height="100"/><br/>
+					<input type="file" id="inputFile" name="pictureFile" onchange="uploadPic()"/> -->
 				</div>
 			</div>
 			<div class="layui-form-item layui-form-text">
@@ -85,10 +93,11 @@
 		</form>
 	</div>
 	<script type="text/javascript" src="${ctx}/static/lib/jquery/jquery.form.js"></script>
+	<script type="text/javascript" src="${ctx}/static/lib/kindeditor/kindeditor-all.js"></script>
 	<script>
 		layui.use([ 'form' ], function() {
 			var form = layui.form;
-
+			form.render('select'); //刷新select选择框渲染,不然不显示
 			form.on('select(topCategoryFilter)', function(data) {
 				console.log(data.elem); //得到select原始DOM对象
 				console.log(data.value); //得到被选中的值
@@ -142,6 +151,12 @@
 		
 		//图片上传
 		function uploadPic() {
+			if($('#inputFile').val()==$('#inputFile').defaultValue
+					||$('#inputFile').val()==""){
+				alert("取消选择");
+				return;
+			}
+			
 			$('#form_add').ajaxSubmit({
 				url : '${ctx}/manager/upload/uploadPic.action',
 				type : 'POST',
@@ -162,13 +177,33 @@
 				dataType : 'json',
 				success : function(jsonObj) {
 					if(jsonObj.code == util.SUCCESS) {
-						mylayer.success(jsonObj.msg);
+						//mylayer.success(jsonObj.msg);
+						mylayer.confirm("添加成功，是够跳转到商品列表界面？", "${ctx}/manager/product/getProductPage.action");
 					} else {
 						mylayer.errorMsg(jsonObj.msg);
 					}
 				}
 			});
 		}
+		
+		
+		var myKindEditor ;
+        KindEditor.ready(function(K) {
+            var kingEditorParams = {
+                 /* //指定上传文件参数名称
+                 filePostName  : "pictureFile",
+                 //指定上传文件请求的url。
+                 uploadJson : '${ctx}/upload/multiPicUpload.action',
+                 //上传类型，分别为image、flash、media、file
+                 dir : "image", */
+                 afterBlur: function () { this.sync(); }
+           }
+           var editor = K.editor(kingEditorParams);
+            
+          //富文本编辑器
+          myKindEditor = KindEditor.create('#form_add[name=detail]', kingEditorParams);
+        });
+
 	</script>
 </body>
 </html>
