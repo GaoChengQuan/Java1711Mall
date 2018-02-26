@@ -30,6 +30,10 @@
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
 	
+	<script type="text/html" id="imgTpl">
+  		<img src="/pic/{{d.mainImage}}">
+	</script>
+	
 	<script>
 		layui.use('table', function(){
 		  var table = layui.table;
@@ -43,6 +47,7 @@
 		      {field:'id', title: 'ID', sort: true},
 		      {field:'name', title: '名称', sort: true},
 		      {field:'subtitle', title: '标题', sort: true},
+		      {field:'mainImage', title: '商品主图', templet: '#imgTpl'},
 		      {field:'price', title: '价格', sort: true},
 		      {field:'stock', title: '库存', sort: true},
 		      {field:'status', title: '状态', sort: true},
