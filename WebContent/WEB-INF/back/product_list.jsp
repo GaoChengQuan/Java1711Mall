@@ -128,6 +128,13 @@
 		      	});
 		    } else if(layEvent === 'edit'){ //编辑
 		    	layer.msg("查看：" + data.id);
+		    	layer.open({
+		    		type : 2, // iframe
+		    		title : '商品编辑',
+		    		area : ['1000px', '500px'],
+		    		offset : '10px', //只定义top坐标，水平保持居中
+		    		content : '${ctx}/manager/product/getEditPage.action?id=' + data.id
+		    	});
 		    }
 		  });
 		  

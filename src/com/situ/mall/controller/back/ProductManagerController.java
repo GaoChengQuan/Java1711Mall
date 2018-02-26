@@ -2,6 +2,7 @@ package com.situ.mall.controller.back;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -47,5 +48,18 @@ public class ProductManagerController {
 	@ResponseBody
 	public ServerResponse add(Product product) {
 		return productService.add(product);
+	}
+	
+	@RequestMapping("/getEditPage")
+	public String getEditPage(Integer id, Model model) {
+		Product product = productService.selectById(id);
+		model.addAttribute("product", product);
+		return "product_edit";
+	}
+	
+	@RequestMapping("/update")
+	@ResponseBody
+	public ServerResponse update(Product product) {
+		return productService.update(product);
 	}
 }

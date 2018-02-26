@@ -66,4 +66,18 @@ public class ProductServiceImpl implements IProductService{
 		}
 		return ServerResponse.createError("添加商品失败");
 	}
+
+	@Override
+	public Product selectById(Integer id) {
+		return productMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public ServerResponse update(Product product) {
+		int rowCount = productMapper.updateByPrimaryKey(product);
+		if (rowCount > 0) {
+			return ServerResponse.createSuccess("更新商品成功");
+		}
+		return ServerResponse.createError("更新商品失败");
+	}
 }

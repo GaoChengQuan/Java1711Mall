@@ -15,4 +15,8 @@ public interface IProductService {
 
 	ServerResponse add(Product product);
 
+	Product selectById(Integer id);
+
+	ServerResponse update(Product product);
+
 }
