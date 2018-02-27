@@ -59,7 +59,7 @@
 		    cellMinWidth: 50, //列宽自动分配，全局定义常规单元格的最小宽度
 		    cols: [[
 			  {type:'checkbox'},
-		      {field:'id', title: 'ID', sort: true},
+		      {field:'id', title: 'ID', sort: true, width:50},
 		      {field:'name', title: '名称', sort: true},
 		      {field:'subtitle', title: '标题', sort: true},
 		      {field:'mainImage', title: '商品主图', templet: '#imgTpl'},
@@ -67,6 +67,7 @@
 		      {field:'stock', title: '库存', sort: true},
 		      {field:'status', title: '状态', templet: '#statusTpl'},
 		      {field:'createTime', title: '创建时间', sort: true},
+		      {field:'updateTime', title: '更新时间', sort: true},
 		      {fixed: 'right', width : 170, toolbar: '#toolbar'} //这里的toolbar值是模板元素的选择器
 		    ]],
 		    page: true,

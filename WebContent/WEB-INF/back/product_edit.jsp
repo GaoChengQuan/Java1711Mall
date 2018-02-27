@@ -75,7 +75,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">商品主图</label>
 				<div class="layui-input-block">
-					<input type="hidden" id="mainImage" name="mainImage" />
+					<input type="hidden" id="mainImage" name="mainImage" value="${product.mainImage}"/>
 					<img alt="" src="/pic/${product.mainImage}" id="imgId" width="100" height="100"/><br/>
 					<input type="file" id="inputFile" name="pictureFile" onchange="uploadPic()"/>
 				</div>
@@ -84,7 +84,7 @@
 				<label class="layui-form-label">商品图片</label>
 				<div class="layui-input-block">
 					<a href="javascript:void(0)" id="multiPicUpload" class="multiPicUpload">上传图片</a>
-					<input type="hidden" id="subImages" name="subImages" />
+					<input type="hidden" id="subImages" name="subImages" value="${product.subImages}"/>
 					<div id="subImagesDiv">
 						<c:set var="subImages" value="${fn:split(product.subImages, ',')}" />
 						<c:forEach items="${subImages}" var="subImage">
@@ -191,8 +191,14 @@
 				dataType : 'json',
 				success : function(jsonObj) {
 					if(jsonObj.code == util.SUCCESS) {
-						//mylayer.success(jsonObj.msg);
-						mylayer.confirm("修改成功，是够跳转到商品列表界面？", "${ctx}/manager/product/getProductPage.action");
+						mylayer.success(jsonObj.msg);
+						//当你在iframe页面关闭自身时
+						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+						setTimeout(function(){
+						     parent.layer.close(index); //再执行关闭
+						     window.parent.location.reload();//刷新父页面
+						},1500);
+
 					} else {
 						mylayer.errorMsg(jsonObj.msg);
 					}
