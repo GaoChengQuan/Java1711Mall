@@ -8,4 +8,6 @@ public interface ICategoryService {
 
 	ServerResponse selectSecondCategory(Integer topCategoryId);
 
+	Integer selectParentCategoryId(Integer categoryId);
+
 }

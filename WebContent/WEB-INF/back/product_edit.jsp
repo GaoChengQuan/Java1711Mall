@@ -151,13 +151,44 @@
 						var html = '<option value="">请选一级分类</option>';
 						var data = jsonObj.data;
 						for (var i = 0; i < data.length; i++) {
-							html += '<option value="'+data[i].id+'">'
-									+ data[i].name + '</option>';
-							;
+							if("${parentCategoryId}" == data[i].id){
+								html += '<option selected value="'+data[i].id+'">'
+								+ data[i].name + '</option>';
+							} else {
+								html += '<option value="'+data[i].id+'">'
+								+ data[i].name + '</option>';
+							}
 						}
 						$('#topCategory').html(html);
 					} else {
 
+					}
+				}
+			});
+			
+			//加载二级分类
+			$.ajax({
+				url : '${ctx}/manager/category/selectSecondCategory.action',
+				data : 'topCategoryId=${parentCategoryId}',
+				dataType : 'json',
+				type : 'POST',
+				success : function(jsonObj) {
+					if (jsonObj.code == util.SUCCESS) {
+						var html = '<option value="">请选二级分类</option>';
+						var data = jsonObj.data;
+						for (var i = 0; i < data.length; i++) {
+							if("${product.categoryId}" == data[i].id){
+								html += '<option selected value="'+data[i].id+'">'
+								+ data[i].name + '</option>';
+							} else {
+								html += '<option value="'+data[i].id+'">'
+								+ data[i].name + '</option>';
+							}
+						}
+						$('#secondCategory').html(html);
+						form.render('select'); //刷新select选择框渲染,不然不显示
+					} else {
+						mylayer.errorMsg(jsonObj.msg);
 					}
 				}
 			});

@@ -147,7 +147,7 @@
 		    	layer.open({
 		    		type : 2, // iframe
 		    		title : '商品编辑',
-		    		area : ['1000px', '500px'],
+		    		area : ['1000px', '650px'],
 		    		offset : '10px', //只定义top坐标，水平保持居中
 		    		content : '${ctx}/manager/product/getEditPage.action?id=' + data.id
 		    	});

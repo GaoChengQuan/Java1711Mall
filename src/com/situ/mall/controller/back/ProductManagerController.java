@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.situ.mall.common.ServerResponse;
 import com.situ.mall.entity.Product;
+import com.situ.mall.service.ICategoryService;
 import com.situ.mall.service.IProductService;
 
 @Controller
@@ -15,6 +16,8 @@ import com.situ.mall.service.IProductService;
 public class ProductManagerController {
 	@Autowired
 	private IProductService productService;
+	@Autowired
+	private ICategoryService categoryService;
 	
 	@RequestMapping("/pageList")
 	@ResponseBody
@@ -54,6 +57,8 @@ public class ProductManagerController {
 	public String getEditPage(Integer id, Model model) {
 		Product product = productService.selectById(id);
 		model.addAttribute("product", product);
+		Integer parentCategoryId = categoryService.selectParentCategoryId(product.getCategoryId());
+		model.addAttribute("parentCategoryId", parentCategoryId);
 		return "product_edit";
 	}
 	

@@ -129,4 +129,20 @@
     from category
     where parent_id=#{topCategoryId}
   </select>
+  
+  <select id="selectParentCategoryId" parameterType="int" resultType="int">
+  	select parent_id
+  	from category
+  	where id=#{categoryId}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </mapper>
