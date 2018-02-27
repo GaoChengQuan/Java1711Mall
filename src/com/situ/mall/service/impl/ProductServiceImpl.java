@@ -74,7 +74,7 @@ public class ProductServiceImpl implements IProductService{
 
 	@Override
 	public ServerResponse update(Product product) {
-		int rowCount = productMapper.updateByPrimaryKey(product);
+		int rowCount = productMapper.updateByPrimaryKeySelective(product);
 		if (rowCount > 0) {
 			return ServerResponse.createSuccess("更新商品成功");
 		}

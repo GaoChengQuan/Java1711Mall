@@ -34,6 +34,21 @@
   		<img src="/pic/{{d.mainImage}}">
 	</script>
 	
+	<script type="text/html" id="statusTpl">
+  		{{# 	if(d.status==1) { 	}}
+					上架
+		{{# 	} else {			}}
+					下架
+		{{#		}					}}
+	</script>
+	<script type="text/html" id="statusTpl1">
+  		{{# 	if(d.status==1) { 	}}
+					<button class="layui-btn">上架</button>
+		{{# 	} else {			}}
+					<button class="layui-btn">下架</button>
+		{{#		}					}}
+	</script>
+	
 	<script>
 		layui.use('table', function(){
 		  var table = layui.table;
@@ -50,7 +65,7 @@
 		      {field:'mainImage', title: '商品主图', templet: '#imgTpl'},
 		      {field:'price', title: '价格', sort: true},
 		      {field:'stock', title: '库存', sort: true},
-		      {field:'status', title: '状态', sort: true},
+		      {field:'status', title: '状态', templet: '#statusTpl'},
 		      {field:'createTime', title: '创建时间', sort: true},
 		      {fixed: 'right', width : 170, toolbar: '#toolbar'} //这里的toolbar值是模板元素的选择器
 		    ]],
